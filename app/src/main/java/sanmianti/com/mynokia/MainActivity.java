@@ -15,6 +15,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
+import android.widget.Toast;
 
 import sanmianti.com.mynokia.databinding.ActivityMainBinding;
 import sanmianti.com.mynokia.utils.StringUtils;
@@ -258,4 +259,21 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                 | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
     }
+
+    Long exitTime = 0L;
+    @Override
+    public void onBackPressed() {
+        
+        if ((System.currentTimeMillis() - exitTime) > 2000) {
+            Toast.makeText(getApplicationContext(), "再按一次退出应用",
+                    Toast.LENGTH_SHORT).show();
+            exitTime = System.currentTimeMillis();
+        } else {
+            MainActivity.this.finish();
+        }
+
+
+    }
+
+
 }
