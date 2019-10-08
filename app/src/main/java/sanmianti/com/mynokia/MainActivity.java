@@ -128,7 +128,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                             break;
                         case "sms":
                             //短信
-                            showToastMessage("短信");
                             toSMSList();
                             break;
                         case "call":
@@ -234,17 +233,26 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
          * 跳转至通讯录
          */
         private void toAddressList(){
-            Intent intent = new Intent(Intent.ACTION_VIEW, ContactsContract.Contacts.CONTENT_URI);
-            startActivityForResult(intent, 0);
+            try{
+                Intent intent = new Intent(Intent.ACTION_VIEW, ContactsContract.Contacts.CONTENT_URI);
+                startActivityForResult(intent, 0);
+            }catch (Exception e){
+                showToastMessage("打开通讯录失败");
+            }
         }
 
         /**
          * 跳转至短信列表
          */
         private void toSMSList(){
-            Intent intent4 = new Intent();
-            intent4.setClassName("com.android.mms","com.android.mms.ui.ConversationList");
-            startActivity(intent4);
+            try{
+                Intent intent4 = new Intent();
+                intent4.setClassName("com.android.mms","com.android.mms.ui.ConversationList");
+                startActivity(intent4);
+            }catch (Exception e){
+                showToastMessage("打开短信失败");
+            }
+
         }
     }
 
@@ -263,7 +271,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     Long exitTime = 0L;
     @Override
     public void onBackPressed() {
-        
+
         if ((System.currentTimeMillis() - exitTime) > 2000) {
             Toast.makeText(getApplicationContext(), "再按一次退出应用",
                     Toast.LENGTH_SHORT).show();
